@@ -12,3 +12,23 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+const express = require("express");
+const helmet = require("helmet");
+const morgan = require("morgan");
+
+const projectRouter = require("./routers/projectRouter");
+const actionRouter = require("./routers/actionsRouter");
+
+const app = express();
+
+app.use(helmet());
+app.use(morgan("dev"));
+app.use(express.json());
+
+app.get("/", (req, res) => res.send("<h1>WebAPI Sprint Challenge</h1>"));
+app.use("/api/projects", projectRouter);
+app.use("/api/actions", actionRouter);
+
+const port = process.env.PORT || 4000;
+
+app.listen(port, console.log(`Server listening on ${port}`));
